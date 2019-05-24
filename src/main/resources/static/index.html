@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<title>login</title>
+<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="css/demo.css" />
+<!--必要样式-->
+<link rel="stylesheet" type="text/css" href="css/component.css" />
+<!--[if IE]>
+<script src="js/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+		<div class="container demo-1">
+			<div class="content">
+				<div id="large-header" class="large-header">
+					<canvas id="demo-canvas"></canvas>
+					<div class="logo_box">
+						<h3>欢迎登录加密程序</h3>
+						
+							<div class="input_outer">
+								<span class="u_user"></span>
+								<input name="logname" class="text" style="color: #FFFFFF !important" type="text" placeholder="请输入您要进行加密的原文" id="text1">
+							</div>
+							<div >
+								<span >选择加密算法</span>
+								<select class="form-control" id="type" name="algo">
+									<option value="HmacMD5">md5</option>
+									<option value="HmacSHA1" selected="selected">sha1</option>
+									<option value="HmacSHA256">sha256</option>
+								</select>
+
+							</div>
+						<div class="input_outer">
+							<span class="us_uer"></span>
+							<input name="logpass" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密钥" id="miyao">
+						</div>
+							<div class="mb2"><a class="act-but submit" href="javascript:;" style="color: #FFFFFF" id="btn-jiami">点击加密</a></div>
+							<!--加密结果-->
+								<!--<span  style="color: #FFFF00">加密结果是：</span>	-->
+								<!--等待加密中-->
+								<!--<div style="display: none;">
+									<div id="md5jiami_lod" align="center">
+										<br><br><img src="img/lod.gif"><br><br><br><br>正在处理中，请稍后..<br><br><br>
+									</div>
+								</div>-->
+							<!--加密结果展示-->
+							<div class="u_text" >
+
+							</div>
+					
+					</div>
+				</div>
+			</div>
+		</div><!-- /container -->
+		<script src="js/TweenLite.min.js"></script>
+		<script src="js/EasePack.min.js"></script>
+		<script src="js/rAF.js"></script>
+		<script src="js/demo-1.js"></script>
+		<script type="text/javascript" src="js/jquery-3.3.1.js" ></script>
+		<script>
+			$("#btn-jiami").click(function(){
+                var text1=$("#text1").val();
+
+			    var data1 ={
+                    hmacMassage:text1,
+                    hmacType:$("#type option:selected").val(),
+                    secretKey:$("#miyao").val()
+				}
+
+				//var idd={"id":text1};
+				$.ajax({
+				type:"post",
+				url:"http://localhost:8080/hmac1/",
+				data:data1,
+				async:false,
+				dataType:"json",
+             	success: function(data){
+                         $('.u_text').html("加密结果是："+data.hmacMessage);
+                     },
+                 error:　 function (XMLHttpRequest, textStatus, errorThrown) {　　　
+				　　　　// alert(XMLHttpRequest.status);
+				　　　　// alert(XMLHttpRequest.readyState);
+				　　　　 alert(errorThrown);
+				　　}
+			});
+			})
+			
+		</script>
+	</body>
+</html>

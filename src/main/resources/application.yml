@@ -1,0 +1,16 @@
+spring:
+  profiles:
+  thymeleaf:
+    active: dev
+    prefix: classpath:/templates/
+    mode: LEGACYHTML5
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/dbgirl
+    username: root
+    password: 981015
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
